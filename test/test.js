@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 import readline from "readline";
 
 const child = spawn("node", ["src/index.js"], {
-  cwd: "/home/ubuntu/warungcyber-mcp-server",
+  cwd: process.cwd(),
   env: {
     ...process.env,
     WARUNGCYBER_BASE_URL: "https://api.warungcyber.net"
