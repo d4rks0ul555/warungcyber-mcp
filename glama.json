@@ -1,0 +1,9 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "name": "WarungCyber MCP Server",
+  "description": "Official Model Context Protocol (MCP) server for WarungCyber AI Gateway — Connect Claude Desktop & Cursor to 19 SOTA AI models (Claude 4.6, DeepSeek R1, Qwen Coder, Venice Uncensored) with pay-as-you-go pricing.",
+  "maintainers": [
+    "d4rks0ul555"
+  ],
+  "icon": "assets/avatar.png"
+}
