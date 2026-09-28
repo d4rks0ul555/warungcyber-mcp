@@ -249,9 +249,9 @@ const server = new McpServer({
 // 1. Tool: List Models
 server.tool(
   "warungcyber_list_models",
-  "List all 19 SOTA AI models available on WarungCyber AI Gateway with real-time pricing (USD & IDR), context windows, latencies, and category tags.",
+  "List available AI models with context window limits, pricing, and category tags.",
   {
-    category: z.enum(["ALL", "CODING", "REASONING", "UNCENSORED", "VISION", "CHEAP"]).optional().describe("Filter models by capability"),
+    category: z.enum(["ALL", "CODING", "REASONING", "UNCENSORED", "VISION", "CHEAP"]).optional().describe("Filter models by capability category"),
     format: z.enum(["json", "markdown"]).optional().describe("Output formatting (default: markdown)")
   },
   async ({ category = "ALL", format = "markdown" }) => {
@@ -295,9 +295,9 @@ server.tool(
 // 2. Tool: Check Balance
 server.tool(
   "warungcyber_check_balance",
-  "Inspect live remaining balance (USD & IDR), active account status, and token usage history for a WarungCyber API key.",
+  "Check the remaining account balance, token usage, and active status for a WarungCyber API key.",
   {
-    apiKey: z.string().describe("Your WarungCyber API key (e.g. sk-wc-...)")
+    apiKey: z.string().describe("WarungCyber API key (starts with sk-wc-)")
   },
   async ({ apiKey }) => {
     const keyToUse = apiKey || DEFAULT_API_KEY;
@@ -348,10 +348,10 @@ server.tool(
   }
 );
 
-// 3. Tool: Chat Completion (Upgraded with full Model Enum & Deep Documentation)
+// 3. Tool: Chat Completion
 server.tool(
   "warungcyber_chat_completion",
-  "Execute an AI reasoning, coding, or text generation task through any of WarungCyber's 19 SOTA models with sub-20ms latency and zero refusal filters.",
+  "Generate a chat completion using a specified WarungCyber AI model.",
   {
     model: z.enum([
       "claude-sonnet-4-6",
@@ -373,12 +373,12 @@ server.tool(
       "gpt-oss-120b",
       "atria-dawn-preview",
       "gemini-2.5-flash-image"
-    ]).describe("The target AI model identifier. Choose 'claude-sonnet-4-6' or 'deepseek-reasoner' for coding/reasoning, 'venice-uncensored' for unrestricted security tasks, or 'gemini-3.1-pro' for massive context."),
-    prompt: z.string().min(1).describe("The user prompt, task instruction, code snippet to refactor, or query to execute."),
-    systemPrompt: z.string().optional().describe("Optional system instruction or persona definition to guide the model's tone and output format."),
-    temperature: z.number().min(0).max(2).optional().describe("Sampling temperature between 0.0 (deterministic) and 2.0 (creative). Default is 0.7."),
-    maxTokens: z.number().int().min(1).max(32000).optional().describe("Maximum number of tokens to generate in the completion (default: 2048)."),
-    apiKey: z.string().optional().describe("WarungCyber API key (format: sk-wc-...). If omitted, uses WARUNGCYBER_API_KEY environment variable.")
+    ]).describe("Target AI model identifier to execute"),
+    prompt: z.string().min(1).describe("The user prompt or query text to complete"),
+    systemPrompt: z.string().optional().describe("Optional system instruction or persona definition"),
+    temperature: z.number().min(0).max(2).optional().describe("Sampling temperature between 0.0 and 2.0 (default: 0.7)"),
+    maxTokens: z.number().int().min(1).max(32000).optional().describe("Maximum completion tokens to generate (default: 2048)"),
+    apiKey: z.string().optional().describe("WarungCyber API key (starts with sk-wc-). Uses WARUNGCYBER_API_KEY environment variable if omitted.")
   },
   async ({ model, prompt, systemPrompt, temperature = 0.7, maxTokens = 2048, apiKey }) => {
     const keyToUse = apiKey || DEFAULT_API_KEY;
@@ -447,10 +447,10 @@ server.tool(
 // 4. Tool: Get Setup Guide
 server.tool(
   "warungcyber_get_setup_guide",
-  "Generate instant copy-paste configuration snippets for Cursor IDE, VS Code Continue, Cline, Chatbox, or Python/Node.js SDKs.",
+  "Get client configuration instructions for Cursor, VS Code, Chatbox, or SDKs.",
   {
-    client: z.enum(["cursor", "continue", "cline", "chatbox", "python", "node", "claude_desktop"]).describe("Target client or tool"),
-    apiKey: z.string().optional().describe("Your WarungCyber API key to embed in snippet")
+    client: z.enum(["cursor", "continue", "cline", "chatbox", "python", "node", "claude_desktop"]).describe("Target client application or development environment"),
+    apiKey: z.string().optional().describe("WarungCyber API key to embed in the configuration snippet")
   },
   async ({ client, apiKey = "sk-wc-YOUR_KEY_HERE" }) => {
     let guide = "";

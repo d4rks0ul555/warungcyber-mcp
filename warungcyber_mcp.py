@@ -61,14 +61,14 @@ GENUINE_MODELS = [
 TOOLS_DEFINITIONS = [
     {
         "name": "warungcyber_list_models",
-        "description": "List all 19 SOTA AI models available on WarungCyber AI Gateway with real-time pricing (USD & IDR), context windows, latencies, and category tags.",
+        "description": "List available AI models with context window limits, pricing, and category tags.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "category": {
                     "type": "string",
                     "enum": ["ALL", "CODING", "REASONING", "UNCENSORED", "VISION", "CHEAP"],
-                    "description": "Filter models by capability"
+                    "description": "Filter models by capability category"
                 },
                 "format": {
                     "type": "string",
@@ -80,13 +80,13 @@ TOOLS_DEFINITIONS = [
     },
     {
         "name": "warungcyber_check_balance",
-        "description": "Inspect live remaining balance (USD & IDR), active account status, and token usage history for a WarungCyber API key.",
+        "description": "Check the remaining account balance, token usage, and active status for a WarungCyber API key.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "apiKey": {
                     "type": "string",
-                    "description": "Your WarungCyber API key (starts with sk-wc-)"
+                    "description": "WarungCyber API key (starts with sk-wc-)"
                 }
             },
             "required": ["apiKey"]
@@ -94,34 +94,34 @@ TOOLS_DEFINITIONS = [
     },
     {
         "name": "warungcyber_chat_completion",
-        "description": "Execute an AI reasoning, coding, or text generation task through any of WarungCyber's 19 SOTA models with sub-20ms latency and zero refusal filters.",
+        "description": "Generate a chat completion using a specified WarungCyber AI model.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "model": {
                     "type": "string",
                     "enum": AVAILABLE_MODEL_IDS,
-                    "description": "The target AI model identifier. Choose 'claude-sonnet-4-6' or 'deepseek-reasoner' for coding/reasoning, 'venice-uncensored' for unrestricted security tasks, or 'gemini-3.1-pro' for massive context."
+                    "description": "Target AI model identifier to execute"
                 },
                 "prompt": {
                     "type": "string",
-                    "description": "The user prompt, task instruction, code snippet to refactor, or query to execute."
+                    "description": "The user prompt or query text to complete"
                 },
                 "systemPrompt": {
                     "type": "string",
-                    "description": "Optional system instruction or persona definition to guide the model's tone and output format."
+                    "description": "Optional system instruction or persona definition"
                 },
                 "temperature": {
                     "type": "number",
-                    "description": "Sampling temperature between 0.0 (deterministic) and 2.0 (creative). Default is 0.7."
+                    "description": "Sampling temperature between 0.0 and 2.0 (default: 0.7)"
                 },
                 "maxTokens": {
                     "type": "integer",
-                    "description": "Maximum number of tokens to generate in the completion (default: 2048)."
+                    "description": "Maximum completion tokens to generate (default: 2048)"
                 },
                 "apiKey": {
                     "type": "string",
-                    "description": "WarungCyber API key (format: sk-wc-...). If omitted, uses WARUNGCYBER_API_KEY environment variable."
+                    "description": "WarungCyber API key (starts with sk-wc-). Uses WARUNGCYBER_API_KEY environment variable if omitted."
                 }
             },
             "required": ["model", "prompt"]
@@ -129,18 +129,18 @@ TOOLS_DEFINITIONS = [
     },
     {
         "name": "warungcyber_get_setup_guide",
-        "description": "Generate instant copy-paste configuration snippets for Cursor IDE, VS Code Continue, Cline, Chatbox, or Python/Node.js SDKs.",
+        "description": "Get client configuration instructions for Cursor, VS Code, Chatbox, or SDKs.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "client": {
                     "type": "string",
                     "enum": ["cursor", "continue", "cline", "chatbox", "python", "node", "claude_desktop"],
-                    "description": "Target client application or programming SDK"
+                    "description": "Target client application or development environment"
                 },
                 "apiKey": {
                     "type": "string",
-                    "description": "Your WarungCyber API key to embed in the configuration snippet"
+                    "description": "WarungCyber API key to embed in the configuration snippet"
                 }
             },
             "required": ["client"]
