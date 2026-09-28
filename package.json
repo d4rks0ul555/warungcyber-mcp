@@ -23,7 +23,7 @@
     "venice-uncensored",
     "warungcyber"
   ],
-  "author": "WarungCyber Nusantara (api.warungcyber.net)",
+  "author": "WarungCyber (api.warungcyber.net)",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",

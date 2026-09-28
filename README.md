@@ -112,4 +112,4 @@ warungcyber-mcp
 ---
 
 ### License
-MIT © 2026 PT Warung Cyber Nusantara
+MIT © 2026 WarungCyber (api.warungcyber.net)
