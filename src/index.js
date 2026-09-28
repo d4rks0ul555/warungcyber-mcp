@@ -351,7 +351,7 @@ server.tool(
 // 3. Tool: Chat Completion
 server.tool(
   "warungcyber_chat_completion",
-  "Generate an AI completion by sending a user prompt and optional system instructions to a specified WarungCyber AI model. Makes an external HTTP request to the gateway and returns the generated text along with token usage metrics.",
+  "Send a chat completion prompt to a selected WarungCyber AI model via external HTTP API call. Consumes account token balance based on prompt and completion length. Requires an active WarungCyber API key (sk-wc-...). Returns generated text and token usage metrics.",
   {
     model: z.enum([
       "claude-sonnet-4-6",

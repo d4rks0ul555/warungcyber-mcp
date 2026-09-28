@@ -94,7 +94,7 @@ TOOLS_DEFINITIONS = [
     },
     {
         "name": "warungcyber_chat_completion",
-        "description": "Generate an AI completion by sending a user prompt and optional system instructions to a specified WarungCyber AI model. Makes an external HTTP request to the gateway and returns the generated text along with token usage metrics.",
+        "description": "Send a chat completion prompt to a selected WarungCyber AI model via external HTTP API call. Consumes account token balance based on prompt and completion length. Requires an active WarungCyber API key (sk-wc-...). Returns generated text and token usage metrics.",
         "inputSchema": {
             "type": "object",
             "properties": {
