@@ -126,7 +126,7 @@ const GENUINE_MODELS = [
     context: "1M",
     speed: "< 3.5s",
     priceUsd: { in: 0.15, out: 0.60 },
-    priceIdr: { in: 24000, out: 9600 },
+    priceIdr: { in: 2400, out: 9600 },
     desc: "Ultra-fast generation with 1M context window for high-throughput applications."
   },
   {
@@ -219,9 +219,31 @@ const GENUINE_MODELS = [
   }
 ];
 
+const AVAILABLE_MODEL_IDS = [
+  "claude-sonnet-4-6",
+  "claude-sonnet-3-7",
+  "claude-opus-4-6-thinking",
+  "claude-3-haiku",
+  "deepseek-reasoner",
+  "deepseek-chat",
+  "qwen-2.5-coder-32b",
+  "qwen-2.5-72b",
+  "venice-uncensored",
+  "gemini-3.1-pro",
+  "gemini-3.8-flash",
+  "gemini-3.7-flash",
+  "gemini-3.6-flash",
+  "gemma-4-31b-it",
+  "gpt-4o-mini",
+  "llama-3.3-70b",
+  "gpt-oss-120b",
+  "atria-dawn-preview",
+  "gemini-2.5-flash-image"
+];
+
 const server = new McpServer({
   name: "warungcyber-mcp",
-  version: "1.0.0"
+  version: "1.0.1"
 });
 
 // 1. Tool: List Models
@@ -326,19 +348,39 @@ server.tool(
   }
 );
 
-// 3. Tool: Chat Completion
+// 3. Tool: Chat Completion (Upgraded with full Model Enum & Deep Documentation)
 server.tool(
   "warungcyber_chat_completion",
-  "Execute an AI completion or reasoning task using any of WarungCyber's 19 SOTA models (Claude Sonnet 4.6, DeepSeek R1, Qwen Coder, Venice Uncensored, etc.).",
+  "Execute an AI reasoning, coding, or text generation task through any of WarungCyber's 19 SOTA models with sub-20ms latency and zero refusal filters.",
   {
-    model: z.string().describe("Model ID (e.g. claude-sonnet-4-6, deepseek-reasoner, qwen-2.5-coder-32b, venice-uncensored, gemini-3.1-pro)"),
-    prompt: z.string().describe("User prompt or instruction"),
-    systemPrompt: z.string().optional().describe("Optional system instruction"),
-    apiKey: z.string().optional().describe("WarungCyber API key (optional if WARUNGCYBER_API_KEY env set)"),
-    temperature: z.number().min(0).max(2).optional().describe("Sampling temperature (default: 0.7)"),
-    maxTokens: z.number().optional().describe("Maximum completion tokens")
+    model: z.enum([
+      "claude-sonnet-4-6",
+      "claude-sonnet-3-7",
+      "claude-opus-4-6-thinking",
+      "claude-3-haiku",
+      "deepseek-reasoner",
+      "deepseek-chat",
+      "qwen-2.5-coder-32b",
+      "qwen-2.5-72b",
+      "venice-uncensored",
+      "gemini-3.1-pro",
+      "gemini-3.8-flash",
+      "gemini-3.7-flash",
+      "gemini-3.6-flash",
+      "gemma-4-31b-it",
+      "gpt-4o-mini",
+      "llama-3.3-70b",
+      "gpt-oss-120b",
+      "atria-dawn-preview",
+      "gemini-2.5-flash-image"
+    ]).describe("The target AI model identifier. Choose 'claude-sonnet-4-6' or 'deepseek-reasoner' for coding/reasoning, 'venice-uncensored' for unrestricted security tasks, or 'gemini-3.1-pro' for massive context."),
+    prompt: z.string().min(1).describe("The user prompt, task instruction, code snippet to refactor, or query to execute."),
+    systemPrompt: z.string().optional().describe("Optional system instruction or persona definition to guide the model's tone and output format."),
+    temperature: z.number().min(0).max(2).optional().describe("Sampling temperature between 0.0 (deterministic) and 2.0 (creative). Default is 0.7."),
+    maxTokens: z.number().int().min(1).max(32000).optional().describe("Maximum number of tokens to generate in the completion (default: 2048)."),
+    apiKey: z.string().optional().describe("WarungCyber API key (format: sk-wc-...). If omitted, uses WARUNGCYBER_API_KEY environment variable.")
   },
-  async ({ model, prompt, systemPrompt, apiKey, temperature = 0.7, maxTokens = 2048 }) => {
+  async ({ model, prompt, systemPrompt, temperature = 0.7, maxTokens = 2048, apiKey }) => {
     const keyToUse = apiKey || DEFAULT_API_KEY;
     if (!keyToUse) {
       return {
