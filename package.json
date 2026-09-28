@@ -1,0 +1,32 @@
+{
+  "name": "warungcyber-mcp",
+  "version": "1.0.0",
+  "description": "Official Model Context Protocol (MCP) server for WarungCyber AI Gateway — Connect Claude Desktop, Cursor, and autonomous agents to 19 SOTA AI models (Claude 4.6, DeepSeek R1, Qwen Coder, Venice Uncensored) with pay-as-you-go pricing.",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "warungcyber-mcp": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-gateway",
+    "claude-desktop",
+    "cursor",
+    "deepseek-r1",
+    "claude-sonnet",
+    "qwen-coder",
+    "venice-uncensored",
+    "warungcyber"
+  ],
+  "author": "WarungCyber Nusantara (api.warungcyber.net)",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "zod": "^3.24.2"
+  }
+}
