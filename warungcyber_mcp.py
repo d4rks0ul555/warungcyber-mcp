@@ -61,7 +61,7 @@ GENUINE_MODELS = [
 TOOLS_DEFINITIONS = [
     {
         "name": "warungcyber_list_models",
-        "description": "List available AI models with context window limits, pricing, and category tags.",
+        "description": "List available AI models from the WarungCyber AI Gateway, including context window limits, token pricing (USD and IDR), and capability categories. Read-only operation.",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -73,14 +73,14 @@ TOOLS_DEFINITIONS = [
                 "format": {
                     "type": "string",
                     "enum": ["markdown", "json"],
-                    "description": "Output format (default: markdown)"
+                    "description": "Output format for the model list (default: markdown)"
                 }
             }
         }
     },
     {
         "name": "warungcyber_check_balance",
-        "description": "Check the remaining account balance, token usage, and active status for a WarungCyber API key.",
+        "description": "Retrieve remaining account balance (USD/IDR), cumulative token consumption, and active account status for a WarungCyber API key via an external gateway API call. Read-only operation.",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -94,7 +94,7 @@ TOOLS_DEFINITIONS = [
     },
     {
         "name": "warungcyber_chat_completion",
-        "description": "Generate a chat completion using a specified WarungCyber AI model.",
+        "description": "Generate an AI completion by sending a user prompt and optional system instructions to a specified WarungCyber AI model. Makes an external HTTP request to the gateway and returns the generated text along with token usage metrics.",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -105,7 +105,7 @@ TOOLS_DEFINITIONS = [
                 },
                 "prompt": {
                     "type": "string",
-                    "description": "The user prompt or query text to complete"
+                    "description": "The user prompt, task instruction, or code snippet to complete"
                 },
                 "systemPrompt": {
                     "type": "string",
@@ -129,7 +129,7 @@ TOOLS_DEFINITIONS = [
     },
     {
         "name": "warungcyber_get_setup_guide",
-        "description": "Get client configuration instructions for Cursor, VS Code, Chatbox, or SDKs.",
+        "description": "Generate formatted Markdown setup guides and copy-paste configuration snippets for integrating WarungCyber into Cursor IDE, VS Code Continue, Cline, Chatbox, or Python and Node.js SDKs. Embeds the provided API key (or placeholder if omitted) directly into the code sample. Read-only operation.",
         "inputSchema": {
             "type": "object",
             "properties": {

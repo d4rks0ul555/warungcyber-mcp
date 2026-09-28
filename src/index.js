@@ -249,10 +249,10 @@ const server = new McpServer({
 // 1. Tool: List Models
 server.tool(
   "warungcyber_list_models",
-  "List available AI models with context window limits, pricing, and category tags.",
+  "List available AI models from the WarungCyber AI Gateway, including context window limits, token pricing (USD and IDR), and capability categories. Read-only operation.",
   {
     category: z.enum(["ALL", "CODING", "REASONING", "UNCENSORED", "VISION", "CHEAP"]).optional().describe("Filter models by capability category"),
-    format: z.enum(["json", "markdown"]).optional().describe("Output formatting (default: markdown)")
+    format: z.enum(["markdown", "json"]).optional().describe("Output format for the model list (default: markdown)")
   },
   async ({ category = "ALL", format = "markdown" }) => {
     let filtered = GENUINE_MODELS;
@@ -295,7 +295,7 @@ server.tool(
 // 2. Tool: Check Balance
 server.tool(
   "warungcyber_check_balance",
-  "Check the remaining account balance, token usage, and active status for a WarungCyber API key.",
+  "Retrieve remaining account balance (USD/IDR), cumulative token consumption, and active account status for a WarungCyber API key via an external gateway API call. Read-only operation.",
   {
     apiKey: z.string().describe("WarungCyber API key (starts with sk-wc-)")
   },
@@ -351,7 +351,7 @@ server.tool(
 // 3. Tool: Chat Completion
 server.tool(
   "warungcyber_chat_completion",
-  "Generate a chat completion using a specified WarungCyber AI model.",
+  "Generate an AI completion by sending a user prompt and optional system instructions to a specified WarungCyber AI model. Makes an external HTTP request to the gateway and returns the generated text along with token usage metrics.",
   {
     model: z.enum([
       "claude-sonnet-4-6",
@@ -374,7 +374,7 @@ server.tool(
       "atria-dawn-preview",
       "gemini-2.5-flash-image"
     ]).describe("Target AI model identifier to execute"),
-    prompt: z.string().min(1).describe("The user prompt or query text to complete"),
+    prompt: z.string().min(1).describe("The user prompt, task instruction, or code snippet to complete"),
     systemPrompt: z.string().optional().describe("Optional system instruction or persona definition"),
     temperature: z.number().min(0).max(2).optional().describe("Sampling temperature between 0.0 and 2.0 (default: 0.7)"),
     maxTokens: z.number().int().min(1).max(32000).optional().describe("Maximum completion tokens to generate (default: 2048)"),
@@ -447,7 +447,7 @@ server.tool(
 // 4. Tool: Get Setup Guide
 server.tool(
   "warungcyber_get_setup_guide",
-  "Get client configuration instructions for Cursor, VS Code, Chatbox, or SDKs.",
+  "Generate formatted Markdown setup guides and copy-paste configuration snippets for integrating WarungCyber into Cursor IDE, VS Code Continue, Cline, Chatbox, or Python and Node.js SDKs. Embeds the provided API key (or placeholder if omitted) directly into the code sample. Read-only operation.",
   {
     client: z.enum(["cursor", "continue", "cline", "chatbox", "python", "node", "claude_desktop"]).describe("Target client application or development environment"),
     apiKey: z.string().optional().describe("WarungCyber API key to embed in the configuration snippet")
