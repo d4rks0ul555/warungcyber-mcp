@@ -9,13 +9,24 @@ const DEFAULT_API_KEY = process.env.WARUNGCYBER_API_KEY || "";
 // 19 SOTA Models Catalog
 const GENUINE_MODELS = [
   {
+    id: "glm-5.3-uncensored",
+    displayName: "GLM 5.3 UNCENSORED",
+    provider: "Uncensored",
+    category: "ZERO REFUSAL",
+    context: "1M",
+    speed: "~3-4s",
+    priceUsd: { in: 0.60, out: 0.60 },
+    priceIdr: { in: 9600, out: 9600 },
+    desc: "100% Uncensored LLM with zero refusal guardrails and a 1M token context window at a flat rate. Built for security research, pentesting scripts, and unrestricted creative writing."
+  },
+  {
     id: "claude-sonnet-4-6",
-    displayName: "Claude Sonnet 4.6 (Thinking)",
+    displayName: "Claude Sonnet 4.6",
     provider: "Anthropic",
     category: "CODING / PRO",
     context: "200k",
-    speed: "< 1.4s",
-    priceUsd: { in: 3.00, out: 15.00 },
+    speed: "~1.4s",
+    priceUsd: { in: 3, out: 15 },
     priceIdr: { in: 48000, out: 240000 },
     desc: "World's #1 reasoning & coding model. Perfect for Cursor IDE and complex system refactoring."
   },
@@ -25,220 +36,209 @@ const GENUINE_MODELS = [
     provider: "Anthropic",
     category: "HYBRID REASONING",
     context: "200k",
-    speed: "< 2.0s",
-    priceUsd: { in: 3.00, out: 15.00 },
+    speed: "~2.4s",
+    priceUsd: { in: 3, out: 15 },
     priceIdr: { in: 48000, out: 240000 },
     desc: "Anthropic's hybrid reasoning model for deep algorithmic problem solving."
   },
   {
-    id: "claude-opus-4-6-thinking",
-    displayName: "Claude Opus 4.6 Thinking",
+    id: "claude-opus-4-7",
+    displayName: "Claude Opus 4.7",
     provider: "Anthropic",
     category: "DEEP THINKING",
     context: "200k",
-    speed: "~8.0s",
-    priceUsd: { in: 15.00, out: 75.00 },
+    speed: "~1.4s",
+    priceUsd: { in: 15, out: 75 },
     priceIdr: { in: 240000, out: 1200000 },
-    desc: "High-level architectural audit and formal reasoning engine."
+    desc: "Latest-generation Opus for heavy reasoning, agentic coding, and deep analysis."
   },
   {
-    id: "claude-3-haiku",
-    displayName: "Claude 3 Haiku (Fast)",
-    provider: "Anthropic",
-    category: "FAST CLAUDE",
-    context: "200k",
-    speed: "< 500ms",
-    priceUsd: { in: 0.25, out: 1.25 },
-    priceIdr: { in: 4000, out: 20000 },
-    desc: "Ultra-fast, lightweight Claude model for real-time bots and streaming."
+    id: "gemini-3.7-flash",
+    displayName: "Gemini 3.7 Flash",
+    provider: "Gemini",
+    category: "TEXT / CHAT",
+    context: "1M",
+    speed: "~1.6s",
+    priceUsd: { in: 0.15, out: 0.60 },
+    priceIdr: { in: 2400, out: 9600 },
+    desc: "Latest Gemini Flash generation: fast, multimodal, and cost-efficient for high-volume use."
   },
   {
-    id: "deepseek-reasoner",
-    displayName: "DeepSeek R1 (Deep Reasoning)",
-    provider: "DeepSeek",
+    id: "gemini-3-flash",
+    displayName: "Gemini 3 Flash",
+    provider: "Gemini",
     category: "REASONING",
-    context: "128k",
-    speed: "Deep Chain",
-    priceUsd: { in: 0.55, out: 2.19 },
-    priceIdr: { in: 8800, out: 35040 },
-    desc: "SOTA open reasoning model with full Chain-of-Thought deliberation (rivals OpenAI o1)."
-  },
-  {
-    id: "deepseek-chat",
-    displayName: "DeepSeek V3 (Chat & Code)",
-    provider: "DeepSeek",
-    category: "OFFICIAL SOTA",
-    context: "128k",
-    speed: "< 800ms",
-    priceUsd: { in: 0.14, out: 0.28 },
-    priceIdr: { in: 2240, out: 4480 },
-    desc: "Fastest general intelligence and code generation model with incredible cost efficiency."
-  },
-  {
-    id: "qwen-2.5-coder-32b",
-    displayName: "Qwen 2.5 Coder 32B",
-    provider: "Alibaba / Qwen",
-    category: "TOP CODING",
-    context: "128k",
-    speed: "< 700ms",
-    priceUsd: { in: 0.07, out: 0.16 },
-    priceIdr: { in: 1120, out: 2560 },
-    desc: "World's top open-weights coding model. Fast refactoring and debugging in VS Code/Cursor."
-  },
-  {
-    id: "qwen-2.5-72b",
-    displayName: "Qwen 2.5 72B Instruct",
-    provider: "Alibaba / Qwen",
-    category: "FLAGSHIP LLM",
-    context: "128k",
-    speed: "< 1.2s",
-    priceUsd: { in: 0.12, out: 0.39 },
-    priceIdr: { in: 1920, out: 6240 },
-    desc: "Flagship 72B parameter model for high-accuracy reasoning and multilingual writing."
-  },
-  {
-    id: "venice-uncensored",
-    displayName: "Venice Uncensored (Dolphin 24B)",
-    provider: "Uncensored",
-    category: "ZERO REFUSAL",
-    context: "128k",
-    speed: "< 750ms",
-    priceUsd: { in: 0.60, out: 2.20 },
-    priceIdr: { in: 9600, out: 35200 },
-    desc: "100% Uncensored LLM with zero moralizing or refusal guardrails. Built for security research, pentesting scripts, exploit payload analysis, and unrestricted creative writing."
+    context: "1M",
+    speed: "< 1s",
+    priceUsd: { in: 0.20, out: 0.80 },
+    priceIdr: { in: 3200, out: 12800 },
+    desc: "Sub-second responses for chat, summarization, and daily coding assistance."
   },
   {
     id: "gemini-3.1-pro",
     displayName: "Google Gemini 3.1 Pro",
-    provider: "Google",
+    provider: "Gemini",
     category: "DEEP LOGIC",
-    context: "2M (Huge)",
-    speed: "< 1.8s",
-    priceUsd: { in: 1.25, out: 5.00 },
+    context: "2M",
+    speed: "~3s",
+    priceUsd: { in: 1.25, out: 5 },
     priceIdr: { in: 20000, out: 80000 },
     desc: "Massive 2 Million token context window. Ingests entire codebases, books, and hundreds of PDFs."
   },
   {
-    id: "gemini-3.8-flash",
-    displayName: "Google Gemini 3.8 Flash",
-    provider: "Google",
+    id: "glm-5-3",
+    displayName: "GLM 5.3",
+    provider: "Zhipu",
     category: "TEXT / CHAT",
-    context: "1M",
-    speed: "< 3.5s",
+    context: "128k",
+    speed: "< 1s",
     priceUsd: { in: 0.15, out: 0.60 },
     priceIdr: { in: 2400, out: 9600 },
-    desc: "Ultra-fast generation with 1M context window for high-throughput applications."
+    desc: "Zhipu's GLM 5.3 flagship: top-tier reasoning & coding at sub-second speed."
   },
   {
-    id: "gemini-3.7-flash",
-    displayName: "Google Gemini 3.7 Flash High",
-    provider: "Google",
+    id: "deepseek-v4-flash",
+    displayName: "DeepSeek V4 Flash",
+    provider: "DeepSeek",
+    category: "OFFICIAL SOTA",
+    context: "128k",
+    speed: "< 1s",
+    priceUsd: { in: 0.14, out: 0.28 },
+    priceIdr: { in: 2240, out: 4480 },
+    desc: "Successor to DeepSeek Chat: smarter, still extremely cheap and very fast."
+  },
+  {
+    id: "deepseek-r1",
+    displayName: "DeepSeek R1",
+    provider: "DeepSeek",
     category: "REASONING",
-    context: "1M",
-    speed: "< 3.0s",
-    priceUsd: { in: 0.20, out: 0.80 },
-    priceIdr: { in: 3200, out: 12800 },
-    desc: "Flash reasoning model with structured chain of thought."
-  },
-  {
-    id: "gemini-3.6-flash",
-    displayName: "Google Gemini 3.6 Flash",
-    provider: "Google",
-    category: "TEXT / CHAT",
-    context: "1M",
-    speed: "< 4.0s",
-    priceUsd: { in: 0.15, out: 0.60 },
-    priceIdr: { in: 2400, out: 9600 },
-    desc: "Standard reliable fast generation for web and conversational bots."
-  },
-  {
-    id: "gemma-4-31b-it",
-    displayName: "Gemma 4 31B IT",
-    provider: "Google",
-    category: "OPEN SOTA",
     context: "128k",
-    speed: "< 1.0s",
-    priceUsd: { in: 0.10, out: 0.30 },
-    priceIdr: { in: 1600, out: 4800 },
-    desc: "Google's open-weights model for high-efficiency processing."
+    speed: "~3.2s",
+    priceUsd: { in: 0.55, out: 2.19 },
+    priceIdr: { in: 8800, out: 35040 },
+    desc: "SOTA reasoning model with full Chain-of-Thought deliberation (rivals OpenAI o1)."
   },
   {
-    id: "gpt-4o-mini",
-    displayName: "OpenAI GPT-4o Mini",
-    provider: "OpenAI",
-    category: "FAST & CHEAP",
-    context: "128k",
-    speed: "< 600ms",
-    priceUsd: { in: 0.15, out: 0.60 },
-    priceIdr: { in: 2400, out: 9600 },
-    desc: "Official fast lightweight model from OpenAI."
+    id: "qwen3-coder-480b",
+    displayName: "Qwen3 Coder 480B",
+    provider: "Qwen",
+    category: "TOP CODING",
+    context: "256k",
+    speed: "< 0.5s",
+    priceUsd: { in: 0.07, out: 0.16 },
+    priceIdr: { in: 1120, out: 2560 },
+    desc: "The strongest open-weights coding model: Qwen3 Coder 480B Turbo. Accurate refactoring and debugging in VS Code/Cursor."
   },
   {
-    id: "llama-3.3-70b",
-    displayName: "Meta Llama 3.3 70B",
-    provider: "Meta",
-    category: "SOTA OPEN",
-    context: "128k",
-    speed: "< 1.0s",
-    priceUsd: { in: 0.12, out: 0.30 },
-    priceIdr: { in: 1920, out: 4800 },
-    desc: "Meta's most intelligent open model matching GPT-4o capabilities."
+    id: "qwen-3.5-397b",
+    displayName: "Qwen 3.5 397B",
+    provider: "Qwen",
+    category: "FLAGSHIP LLM",
+    context: "256k",
+    speed: "< 1s",
+    priceUsd: { in: 0.12, out: 0.39 },
+    priceIdr: { in: 1920, out: 6240 },
+    desc: "Flagship open-weight Qwen 3.5 397B for frontier-class general and coding capability."
   },
   {
-    id: "gpt-oss-120b",
-    displayName: "GPT-OSS 120B Ultra-Fast",
-    provider: "Open-Weights",
-    category: "MICROSERVICE",
-    context: "128k",
-    speed: "< 850ms",
-    priceUsd: { in: 0.10, out: 0.40 },
-    priceIdr: { in: 1600, out: 6400 },
-    desc: "Sub-second text processing for real-time classification and pipelines."
+    id: "claude-haiku-4-5",
+    displayName: "Claude Haiku 4.5",
+    provider: "Anthropic",
+    category: "FAST CLAUDE",
+    context: "200k",
+    speed: "~1.6s",
+    priceUsd: { in: 0.25, out: 1.25 },
+    priceIdr: { in: 4000, out: 20000 },
+    desc: "Fastest, cheapest Claude 4.5 for classification, chat, and data extraction."
   },
   {
-    id: "atria-dawn-preview",
-    displayName: "Atria Dawn ASI Preview",
-    provider: "Atria ASI",
+    id: "kimi-k2-6",
+    displayName: "Kimi K2.6",
+    provider: "Moonshot",
     category: "RESEARCH",
-    context: "128k",
-    speed: "~15s",
-    priceUsd: { in: 0.50, out: 2.00 },
+    context: "256k",
+    speed: "~1.4s",
+    priceUsd: { in: 0.50, out: 2 },
     priceIdr: { in: 8000, out: 32000 },
-    desc: "Next-gen ASI mathematical logic and autonomous deliberation."
+    desc: "Moonshot's Kimi K2.6: agentic coding and tool-use reasoning with a 256k context window."
   },
   {
-    id: "gemini-2.5-flash-image",
-    displayName: "Google Imagen / Flash Image",
-    provider: "ImageGen",
-    category: "TEXT TO IMAGE",
-    context: "Image Mode",
-    speed: "< 2.5s",
-    priceUsd: { in: 0.05, out: 0.05 },
-    priceIdr: { in: 800, out: 800 },
-    desc: "Generates high-resolution photorealistic images directly from prompt ($0.05 / Rp 800 per image)."
+    id: "claude-opus-5",
+    displayName: "Claude Opus 5",
+    provider: "Anthropic",
+    category: "DEEP THINKING",
+    context: "200k",
+    speed: "~1.4s",
+    priceUsd: { in: 15, out: 75 },
+    priceIdr: { in: 240000, out: 1200000 },
+    desc: "Anthropic's generation-5 flagship: the strongest reasoning and agentic coding model available."
+  },
+  {
+    id: "claude-sonnet-5",
+    displayName: "Claude Sonnet 5",
+    provider: "Anthropic",
+    category: "CODING / PRO",
+    context: "200k",
+    speed: "~1.1s",
+    priceUsd: { in: 3, out: 15 },
+    priceIdr: { in: 48000, out: 240000 },
+    desc: "Generation-5 Sonnet flagship: the best balance of speed, coding, and reasoning for daily pro work."
+  },
+  {
+    id: "deepseek-v4-pro",
+    displayName: "DeepSeek V4 Pro",
+    provider: "DeepSeek",
+    category: "OFFICIAL SOTA",
+    context: "128k",
+    speed: "~1.5s",
+    priceUsd: { in: 0.55, out: 2.19 },
+    priceIdr: { in: 8800, out: 35040 },
+    desc: "The Pro flagship of the DeepSeek V4 series for heavy reasoning and coding."
+  },
+  {
+    id: "qwen3-max",
+    displayName: "Qwen3 Max",
+    provider: "Qwen",
+    category: "FLAGSHIP LLM",
+    context: "256k",
+    speed: "~3.9s",
+    priceUsd: { in: 0.12, out: 0.39 },
+    priceIdr: { in: 1920, out: 6240 },
+    desc: "Alibaba's Qwen3 Max flagship: the strongest Qwen for reasoning, coding, and agents."
+  },
+  {
+    id: "kimi-k3",
+    displayName: "Kimi K3",
+    provider: "Moonshot",
+    category: "FLAGSHIP LLM",
+    context: "256k",
+    speed: "< 1s",
+    priceUsd: { in: 0.50, out: 2 },
+    priceIdr: { in: 8000, out: 32000 },
+    desc: "Moonshot's Kimi K3 flagship: the fastest agentic coding and tool-use model in its class."
   }
 ];
 
 const AVAILABLE_MODEL_IDS = [
+  "glm-5.3-uncensored",
   "claude-sonnet-4-6",
   "claude-sonnet-3-7",
-  "claude-opus-4-6-thinking",
-  "claude-3-haiku",
-  "deepseek-reasoner",
-  "deepseek-chat",
-  "qwen-2.5-coder-32b",
-  "qwen-2.5-72b",
-  "venice-uncensored",
-  "gemini-3.1-pro",
-  "gemini-3.8-flash",
+  "claude-opus-4-7",
   "gemini-3.7-flash",
-  "gemini-3.6-flash",
-  "gemma-4-31b-it",
-  "gpt-4o-mini",
-  "llama-3.3-70b",
-  "gpt-oss-120b",
-  "atria-dawn-preview",
-  "gemini-2.5-flash-image"
+  "gemini-3-flash",
+  "gemini-3.1-pro",
+  "glm-5-3",
+  "deepseek-v4-flash",
+  "deepseek-r1",
+  "qwen3-coder-480b",
+  "qwen-3.5-397b",
+  "claude-haiku-4-5",
+  "kimi-k2-6",
+  "claude-opus-5",
+  "claude-sonnet-5",
+  "deepseek-v4-pro",
+  "qwen3-max",
+  "kimi-k3"
 ];
 
 const server = new McpServer({
@@ -279,7 +279,7 @@ server.tool(
 
     let md = `### 🌐 WarungCyber AI Gateway — 19 SOTA Models Catalog\n`;
     md += `**Gateway Base URL:** \`${BASE_URL}/v1\` (100% OpenAI-compatible SDK standard)\n`;
-    md += `**Co-Location:** Jakarta Datacenter (< 20ms Latency) • **Pricing:** Pay-as-you-go from $1.00 USD (Rp 16,000)\n\n`;
+    md += `**Co-Location:** Jakarta Datacenter (< 20ms Latency) • **Pricing:** Pay-as-you-go from $1.00 USD (Rp 18,000)\n\n`;
     md += `| Model ID | Provider | Context | Speed | Input / 1M | Output / 1M | Specialization |\n`;
     md += `| :--- | :--- | :---: | :---: | :---: | :---: | :--- |\n`;
 
@@ -354,25 +354,25 @@ server.tool(
   "Send a chat completion prompt to a selected WarungCyber AI model via external HTTP API call. Consumes account token balance based on prompt and completion length. Requires an active WarungCyber API key (sk-wc-...). Returns generated text and token usage metrics.",
   {
     model: z.enum([
+      "glm-5.3-uncensored",
       "claude-sonnet-4-6",
       "claude-sonnet-3-7",
-      "claude-opus-4-6-thinking",
-      "claude-3-haiku",
-      "deepseek-reasoner",
-      "deepseek-chat",
-      "qwen-2.5-coder-32b",
-      "qwen-2.5-72b",
-      "venice-uncensored",
-      "gemini-3.1-pro",
-      "gemini-3.8-flash",
+      "claude-opus-4-7",
       "gemini-3.7-flash",
-      "gemini-3.6-flash",
-      "gemma-4-31b-it",
-      "gpt-4o-mini",
-      "llama-3.3-70b",
-      "gpt-oss-120b",
-      "atria-dawn-preview",
-      "gemini-2.5-flash-image"
+      "gemini-3-flash",
+      "gemini-3.1-pro",
+      "glm-5-3",
+      "deepseek-v4-flash",
+      "deepseek-r1",
+      "qwen3-coder-480b",
+      "qwen-3.5-397b",
+      "claude-haiku-4-5",
+      "kimi-k2-6",
+      "claude-opus-5",
+      "claude-sonnet-5",
+      "deepseek-v4-pro",
+      "qwen3-max",
+      "kimi-k3"
     ]).describe("Target AI model identifier to execute"),
     prompt: z.string().min(1).describe("The user prompt, task instruction, or code snippet to complete"),
     systemPrompt: z.string().optional().describe("Optional system instruction or persona definition"),
@@ -464,9 +464,9 @@ server.tool(
    - **API Key:** \`${apiKey}\`
 3. Add any model name from our catalog, e.g.:
    - \`claude-sonnet-4-6\`
-   - \`deepseek-reasoner\`
-   - \`qwen-2.5-coder-32b\`
-   - \`venice-uncensored\`
+   - \`deepseek-r1\`
+   - \`qwen3-coder-480b\`
+   - \`glm-5.3-uncensored\`
 4. Click **Verify** ➔ Ready to code! 🚀`;
     } else if (client === "continue") {
       guide = `### 💻 VS Code Continue Extension (\`~/.continue/config.json\`)
@@ -484,21 +484,21 @@ server.tool(
     {
       "title": "DeepSeek R1 Reasoning (WarungCyber)",
       "provider": "openai",
-      "model": "deepseek-reasoner",
+      "model": "deepseek-r1",
       "apiBase": "${BASE_URL}/v1",
       "apiKey": "${apiKey}"
     },
     {
-      "title": "Qwen 2.5 Coder 32B (WarungCyber)",
+      "title": "Qwen3 Coder 480B (WarungCyber)",
       "provider": "openai",
-      "model": "qwen-2.5-coder-32b",
+      "model": "qwen3-coder-480b",
       "apiBase": "${BASE_URL}/v1",
       "apiKey": "${apiKey}"
     },
     {
-      "title": "Venice Dolphin 24B Uncensored (WarungCyber)",
+      "title": "GLM 5.3 Uncensored (WarungCyber)",
       "provider": "openai",
-      "model": "venice-uncensored",
+      "model": "glm-5.3-uncensored",
       "apiBase": "${BASE_URL}/v1",
       "apiKey": "${apiKey}"
     }
@@ -518,7 +518,7 @@ client = OpenAI(
 
 # Call any of 19 SOTA models:
 response = client.chat.completions.create(
-    model="deepseek-reasoner",  # or claude-sonnet-4-6, venice-uncensored, qwen-2.5-coder-32b
+    model="deepseek-r1",  # or claude-sonnet-4-6, glm-5.3-uncensored, qwen3-coder-480b
     messages=[
         {"role": "system", "content": "You are an elite coding assistant."},
         {"role": "user", "content": "Optimize this binary search algorithm in Python."}
@@ -570,7 +570,7 @@ Add this block under \`"mcpServers"\`:
 2. Select **OpenAI Custom API**.
 3. Set **API Host / Base URL:** \`${BASE_URL}/v1\`
 4. Set **API Key:** \`${apiKey}\`
-5. Custom Models: \`claude-sonnet-4-6\`, \`deepseek-reasoner\`, \`venice-uncensored\`, \`gemini-3.1-pro\`.`;
+5. Custom Models: \`claude-sonnet-4-6\`, \`deepseek-r1\`, \`glm-5.3-uncensored\`, \`gemini-3.1-pro\`.`;
     }
 
     return { content: [{ type: "text", text: guide }] };

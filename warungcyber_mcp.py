@@ -15,47 +15,47 @@ BASE_URL = os.environ.get("WARUNGCYBER_BASE_URL", "https://api.warungcyber.net")
 DEFAULT_API_KEY = os.environ.get("WARUNGCYBER_API_KEY", "")
 
 AVAILABLE_MODEL_IDS = [
+    "glm-5.3-uncensored",
     "claude-sonnet-4-6",
     "claude-sonnet-3-7",
-    "claude-opus-4-6-thinking",
-    "claude-3-haiku",
-    "deepseek-reasoner",
-    "deepseek-chat",
-    "qwen-2.5-coder-32b",
-    "qwen-2.5-72b",
-    "venice-uncensored",
-    "gemini-3.1-pro",
-    "gemini-3.8-flash",
+    "claude-opus-4-7",
     "gemini-3.7-flash",
-    "gemini-3.6-flash",
-    "gemma-4-31b-it",
-    "gpt-4o-mini",
-    "llama-3.3-70b",
-    "gpt-oss-120b",
-    "atria-dawn-preview",
-    "gemini-2.5-flash-image"
+    "gemini-3-flash",
+    "gemini-3.1-pro",
+    "glm-5-3",
+    "deepseek-v4-flash",
+    "deepseek-r1",
+    "qwen3-coder-480b",
+    "qwen-3.5-397b",
+    "claude-haiku-4-5",
+    "kimi-k2-6",
+    "claude-opus-5",
+    "claude-sonnet-5",
+    "deepseek-v4-pro",
+    "qwen3-max",
+    "kimi-k3"
 ]
 
 GENUINE_MODELS = [
-    {"id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6 (Thinking)", "provider": "Anthropic", "context": "200k", "speed": "< 1.4s", "usd_in": 3.0, "usd_out": 15.0, "idr_in": 48000, "idr_out": 240000},
-    {"id": "claude-sonnet-3-7", "name": "Claude 3.7 Sonnet", "provider": "Anthropic", "context": "200k", "speed": "< 2.0s", "usd_in": 3.0, "usd_out": 15.0, "idr_in": 48000, "idr_out": 240000},
-    {"id": "claude-opus-4-6-thinking", "name": "Claude Opus 4.6 Thinking", "provider": "Anthropic", "context": "200k", "speed": "~8.0s", "usd_in": 15.0, "usd_out": 75.0, "idr_in": 240000, "idr_out": 1200000},
-    {"id": "claude-3-haiku", "name": "Claude 3 Haiku (Fast)", "provider": "Anthropic", "context": "200k", "speed": "< 500ms", "usd_in": 0.25, "usd_out": 1.25, "idr_in": 4000, "idr_out": 20000},
-    {"id": "deepseek-reasoner", "name": "DeepSeek R1 (Deep Reasoning)", "provider": "DeepSeek", "context": "128k", "speed": "Deep Chain", "usd_in": 0.55, "usd_out": 2.19, "idr_in": 8800, "idr_out": 35040},
-    {"id": "deepseek-chat", "name": "DeepSeek V3 (Chat / Code)", "provider": "DeepSeek", "context": "128k", "speed": "< 800ms", "usd_in": 0.14, "usd_out": 0.28, "idr_in": 2240, "idr_out": 4480},
-    {"id": "qwen-2.5-coder-32b", "name": "Qwen 2.5 Coder 32B", "provider": "Qwen / Alibaba", "context": "128k", "speed": "< 700ms", "usd_in": 0.07, "usd_out": 0.16, "idr_in": 1120, "idr_out": 2560},
-    {"id": "qwen-2.5-72b", "name": "Qwen 2.5 72B Instruct", "provider": "Qwen / Alibaba", "context": "128k", "speed": "< 1.2s", "usd_in": 0.12, "usd_out": 0.39, "idr_in": 1920, "idr_out": 6240},
-    {"id": "venice-uncensored", "name": "Venice Uncensored (Dolphin 24B)", "provider": "Uncensored", "context": "128k", "speed": "< 750ms", "usd_in": 0.60, "usd_out": 2.20, "idr_in": 9600, "idr_out": 35200},
-    {"id": "gemini-3.1-pro", "name": "Google Gemini 3.1 Pro (2M Context)", "provider": "Google", "context": "2M", "speed": "< 1.8s", "usd_in": 1.25, "usd_out": 5.0, "idr_in": 20000, "idr_out": 80000},
-    {"id": "gemini-3.8-flash", "name": "Google Gemini 3.8 Flash (1M Context)", "provider": "Google", "context": "1M", "speed": "< 3.5s", "usd_in": 0.15, "usd_out": 0.60, "idr_in": 2400, "idr_out": 9600},
-    {"id": "gemini-3.7-flash", "name": "Google Gemini 3.7 Flash High", "provider": "Google", "context": "1M", "speed": "< 3.0s", "usd_in": 0.20, "usd_out": 0.80, "idr_in": 3200, "idr_out": 12800},
-    {"id": "gemini-3.6-flash", "name": "Google Gemini 3.6 Flash", "provider": "Google", "context": "1M", "speed": "< 4.0s", "usd_in": 0.15, "usd_out": 0.60, "idr_in": 2400, "idr_out": 9600},
-    {"id": "gemma-4-31b-it", "name": "Gemma 4 31B IT", "provider": "Google", "context": "128k", "speed": "< 1.0s", "usd_in": 0.10, "usd_out": 0.30, "idr_in": 1600, "idr_out": 4800},
-    {"id": "gpt-4o-mini", "name": "OpenAI GPT-4o Mini", "provider": "OpenAI", "context": "128k", "speed": "< 600ms", "usd_in": 0.15, "usd_out": 0.60, "idr_in": 2400, "idr_out": 9600},
-    {"id": "llama-3.3-70b", "name": "Meta Llama 3.3 70B", "provider": "Meta", "context": "128k", "speed": "< 1.0s", "usd_in": 0.12, "usd_out": 0.30, "idr_in": 1920, "idr_out": 4800},
-    {"id": "gpt-oss-120b", "name": "GPT-OSS 120B Ultra-Fast", "provider": "Open-Weights", "context": "128k", "speed": "< 850ms", "usd_in": 0.10, "usd_out": 0.40, "idr_in": 1600, "idr_out": 6400},
-    {"id": "atria-dawn-preview", "name": "Atria Dawn ASI Preview", "provider": "Atria ASI", "context": "128k", "speed": "~15s", "usd_in": 0.50, "usd_out": 2.00, "idr_in": 8000, "idr_out": 32000},
-    {"id": "gemini-2.5-flash-image", "name": "Google Imagen / Flash Image", "provider": "ImageGen", "context": "Image Mode", "speed": "< 2.5s", "usd_in": 0.05, "usd_out": 0.05, "idr_in": 800, "idr_out": 800}
+    {"id": "glm-5.3-uncensored", "name": "GLM 5.3 UNCENSORED", "provider": "Uncensored", "context": "1M", "speed": "~3-4s", "usd_in": 0.6, "usd_out": 0.6, "idr_in": 9600, "idr_out": 9600},
+    {"id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6", "provider": "Anthropic", "context": "200k", "speed": "~1.4s", "usd_in": 3, "usd_out": 15, "idr_in": 48000, "idr_out": 240000},
+    {"id": "claude-sonnet-3-7", "name": "Claude 3.7 Sonnet", "provider": "Anthropic", "context": "200k", "speed": "~2.4s", "usd_in": 3, "usd_out": 15, "idr_in": 48000, "idr_out": 240000},
+    {"id": "claude-opus-4-7", "name": "Claude Opus 4.7", "provider": "Anthropic", "context": "200k", "speed": "~1.4s", "usd_in": 15, "usd_out": 75, "idr_in": 240000, "idr_out": 1200000},
+    {"id": "gemini-3.7-flash", "name": "Gemini 3.7 Flash", "provider": "Gemini", "context": "1M", "speed": "~1.6s", "usd_in": 0.15, "usd_out": 0.6, "idr_in": 2400, "idr_out": 9600},
+    {"id": "gemini-3-flash", "name": "Gemini 3 Flash", "provider": "Gemini", "context": "1M", "speed": "< 1s", "usd_in": 0.2, "usd_out": 0.8, "idr_in": 3200, "idr_out": 12800},
+    {"id": "gemini-3.1-pro", "name": "Google Gemini 3.1 Pro", "provider": "Gemini", "context": "2M", "speed": "~3s", "usd_in": 1.25, "usd_out": 5, "idr_in": 20000, "idr_out": 80000},
+    {"id": "glm-5-3", "name": "GLM 5.3", "provider": "Zhipu", "context": "128k", "speed": "< 1s", "usd_in": 0.15, "usd_out": 0.6, "idr_in": 2400, "idr_out": 9600},
+    {"id": "deepseek-v4-flash", "name": "DeepSeek V4 Flash", "provider": "DeepSeek", "context": "128k", "speed": "< 1s", "usd_in": 0.14, "usd_out": 0.28, "idr_in": 2240, "idr_out": 4480},
+    {"id": "deepseek-r1", "name": "DeepSeek R1", "provider": "DeepSeek", "context": "128k", "speed": "~3.2s", "usd_in": 0.55, "usd_out": 2.19, "idr_in": 8800, "idr_out": 35040},
+    {"id": "qwen3-coder-480b", "name": "Qwen3 Coder 480B", "provider": "Qwen", "context": "256k", "speed": "< 0.5s", "usd_in": 0.07, "usd_out": 0.16, "idr_in": 1120, "idr_out": 2560},
+    {"id": "qwen-3.5-397b", "name": "Qwen 3.5 397B", "provider": "Qwen", "context": "256k", "speed": "< 1s", "usd_in": 0.12, "usd_out": 0.39, "idr_in": 1920, "idr_out": 6240},
+    {"id": "claude-haiku-4-5", "name": "Claude Haiku 4.5", "provider": "Anthropic", "context": "200k", "speed": "~1.6s", "usd_in": 0.25, "usd_out": 1.25, "idr_in": 4000, "idr_out": 20000},
+    {"id": "kimi-k2-6", "name": "Kimi K2.6", "provider": "Moonshot", "context": "256k", "speed": "~1.4s", "usd_in": 0.5, "usd_out": 2, "idr_in": 8000, "idr_out": 32000},
+    {"id": "claude-opus-5", "name": "Claude Opus 5", "provider": "Anthropic", "context": "200k", "speed": "~1.4s", "usd_in": 15, "usd_out": 75, "idr_in": 240000, "idr_out": 1200000},
+    {"id": "claude-sonnet-5", "name": "Claude Sonnet 5", "provider": "Anthropic", "context": "200k", "speed": "~1.1s", "usd_in": 3, "usd_out": 15, "idr_in": 48000, "idr_out": 240000},
+    {"id": "deepseek-v4-pro", "name": "DeepSeek V4 Pro", "provider": "DeepSeek", "context": "128k", "speed": "~1.5s", "usd_in": 0.55, "usd_out": 2.19, "idr_in": 8800, "idr_out": 35040},
+    {"id": "qwen3-max", "name": "Qwen3 Max", "provider": "Qwen", "context": "256k", "speed": "~3.9s", "usd_in": 0.12, "usd_out": 0.39, "idr_in": 1920, "idr_out": 6240},
+    {"id": "kimi-k3", "name": "Kimi K3", "provider": "Moonshot", "context": "256k", "speed": "< 1s", "usd_in": 0.5, "usd_out": 2, "idr_in": 8000, "idr_out": 32000}
 ]
 
 TOOLS_DEFINITIONS = [
@@ -196,7 +196,7 @@ def handle_chat_completion(args):
     key = args.get("apiKey") or DEFAULT_API_KEY
     if not key:
         return [{"type": "text", "text": "❌ Error: API Key is required."}]
-    model = args.get("model", "deepseek-chat")
+    model = args.get("model", "deepseek-v4-flash")
     prompt = args.get("prompt", "")
     sys_prompt = args.get("systemPrompt")
     temp = args.get("temperature", 0.7)
@@ -226,7 +226,7 @@ def handle_chat_completion(args):
 def handle_get_setup_guide(args):
     client = args.get("client", "cursor")
     api_key = args.get("apiKey", "sk-wc-YOUR_KEY_HERE")
-    guide = f"### Configuration Guide for {client.upper()}\nBase URL: `{BASE_URL}/v1`\nAPI Key: `{api_key}`\nModels: `claude-sonnet-4-6`, `deepseek-reasoner`, `qwen-2.5-coder-32b`, `venice-uncensored`."
+    guide = f"### Configuration Guide for {client.upper()}\nBase URL: `{BASE_URL}/v1`\nAPI Key: `{api_key}`\nModels: `claude-sonnet-4-6`, `deepseek-r1`, `qwen3-coder-480b`, `glm-5.3-uncensored`."
     return [{"type": "text", "text": guide}]
 
 def main():
